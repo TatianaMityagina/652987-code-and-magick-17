@@ -20,9 +20,9 @@ window.renderStatistics = function (ctx, names, times) {
 
   // Find the maximum element
   var maxTime = times[0];
-  for (var i = 1; i < times.length; i++) {
-    if (times[i] > maxTime) {
-      maxTime = times[i];
+  for (var j = 0 + 1; j <= times.length - 1; j++) {
+    if (times[j] > maxTime) {
+      maxTime = times[j];
     }
   }
 
