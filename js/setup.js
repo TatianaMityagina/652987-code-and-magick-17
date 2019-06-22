@@ -9,6 +9,10 @@ var setupWizardCoat = setup.querySelector('.wizard-coat');
 var setupWizardEyes = setup.querySelector('.wizard-eyes');
 var setupFireball = setup.querySelector('.setup-fireball-wrap');
 var setupUserNameFocus = false;
+var initialCoords = {
+  x: getComputedStyle(setup).left,
+  y: getComputedStyle(setup).top
+};
 
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
@@ -65,6 +69,8 @@ var openPopup = function () {
 
 var closePopup = function () {
   setup.classList.add('hidden');
+  setup.style.top = initialCoords.y;
+  setup.style.left = initialCoords.x;
   document.removeEventListener('keydown', onPopupEscPress);
   setupUserName.removeEventListener('focus', onSetupUserNameFocus);
   setupUserName.removeEventListener('focusout', onSetupUserNameFocusout);
