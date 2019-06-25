@@ -35,29 +35,6 @@
     setupUserNameFocus = false;
   };
 
-  // При неправильном заполнении имени высвечивается сообщение след. вида
-  setupUserName.addEventListener('invalid', function (evt) {
-    if (setupUserName.validity.tooShort) {
-      setupUserName.setCustomValidity('Имя должно состоять минимум из 2-х символов');
-    } else if (setupUserName.validity.tooLong) {
-      setupUserName.setCustomValidity('Имя не должно превышать 25-ти символов');
-    } else if (setupUserName.validity.valueMissing) {
-      setupUserName.setCustomValidity('Обязательное поле');
-    } else {
-      setupUserName.setCustomValidity('');
-    }
-  });
-
-  // Сбросить значение поля, если это значение стало корректно
-  setupUserName.addEventListener('input', function (evt) {
-    var target = evt.target;
-    if (target.value.length < 2) {
-      target.setCustomValidity('Имя должно состоять минимум из 2-х символов');
-    } else {
-      target.setCustomValidity('');
-    }
-  });
-
   var openPopup = function () {
     setup.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
