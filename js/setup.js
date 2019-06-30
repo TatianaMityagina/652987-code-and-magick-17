@@ -3,6 +3,11 @@
 (function () {
 
   // Покажем окно настроек пользователя
+  var WIZARD_COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+  var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
+  var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+  var WIZARDS_NUMBER = 4;
+
   var setup = document.querySelector('.setup');
   var setupWizardCoat = setup.querySelector('.wizard-coat');
   var setupWizardEyes = setup.querySelector('.wizard-eyes');
@@ -16,13 +21,6 @@
     .content
     .querySelector('.setup-similar-item');
 
-
-  var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  var WIZARD_COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
-  var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-  var WIZARDS_NUMBER = 4;
 
   window.onSetupFireballClick = function () {
     setupFireball.style.background = getRandomItem(FIREBALL_COLORS);
@@ -42,17 +40,30 @@
     return arr[Math.floor((Math.random() * arr.length))];
   };
 
-  // Создадим массив сгенерированных волшебников
-  var wizardsListRandom = [];
-  for (var i = 0; i < WIZARDS_NUMBER; i++) {
-    var wizardRandom = {};
+  // В цикле создадим несколько волшебников
+  // Добавим их в разметку через элемент documentFragment
+  var onLoad = function (wizards) {
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < WIZARDS_NUMBER; i++) {
+      fragment.appendChild(createWizard(wizards[i]));
+    }
+    document.querySelector('.setup-similar').classList.remove('hidden');
+    similarListElement.appendChild(fragment);
+  };
 
-    wizardRandom.name = getRandomItem(WIZARD_NAMES) + ' ' + getRandomItem(WIZARD_SURNAMES);
-    wizardRandom.coatColor = getRandomItem(WIZARD_COAT_COLOR);
-    wizardRandom.eyesColor = getRandomItem(WIZARD_EYES_COLOR);
+  var onError = function (errorMessage) {
+    var message = document.createElement('div');
+    message.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    message.style.position = 'absolute';
+    message.style.left = 0;
+    message.style.right = 0;
+    message.style.fontSize = '30px';
+    message.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', message);
+  };
 
-    wizardsListRandom.push(wizardRandom);
-  }
+
+  window.backend.load(onLoad, onError);
 
   // Создадим волшебника
   var createWizard = function (wizard) {
@@ -63,16 +74,5 @@
 
     return newWizard;
   };
-
-  // В цикле создадим несколько волшебников
-  // Добавим их в разметку через элемент documentFragment
-  var fragment = document.createDocumentFragment();
-  for (var j = 0; j < wizardsListRandom.length; j++) {
-    fragment.appendChild(createWizard(wizardsListRandom[j]));
-  }
-
-  similarListElement.appendChild(fragment);
-
-  setup.querySelector('.setup-similar').classList.remove('hidden');
 
 })();
