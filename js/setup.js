@@ -40,6 +40,16 @@
     return arr[Math.floor((Math.random() * arr.length))];
   };
 
+  // Создадим волшебника
+  var createWizard = function (wizard) {
+    var newWizard = wizardTemplate.cloneNode(true);
+    newWizard.querySelector('.setup-similar-label').textContent = wizard.name;
+    newWizard.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    newWizard.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
+
+    return newWizard;
+  };
+
   // В цикле создадим несколько волшебников
   // Добавим их в разметку через элемент documentFragment
   var onLoad = function (wizards) {
@@ -64,15 +74,5 @@
 
 
   window.backend.load(onLoad, onError);
-
-  // Создадим волшебника
-  var createWizard = function (wizard) {
-    var newWizard = wizardTemplate.cloneNode(true);
-    newWizard.querySelector('.setup-similar-label').textContent = wizard.name;
-    newWizard.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    newWizard.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
-
-    return newWizard;
-  };
 
 })();
